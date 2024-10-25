@@ -29,7 +29,9 @@
 .legal-container ul {
   list-style-type: none; /* Sin viñetas */
   padding: 0; /* Sin relleno */
-  text-align: center; /* Centrar horizontalmente */
+  display: flex; /* Disposición horizontal de los enlaces */
+  flex-direction: column; /* Cambiar a disposición en columna */
+  text-align: center; /* Centrar los enlaces horizontalmente */
 }
 
 .legal-container li {
@@ -56,10 +58,8 @@
 
 .contact-info p {
   margin: 5px 0; /* Espacio entre datos de contacto */
-  display: flex; /* Flexbox para ícono y texto en la misma línea */
-  align-items: center; /* Centrar verticalmente los íconos y texto */
+  display: block; /* Mostrar cada línea de contacto en bloque */
   font-size: 0.9rem; /* Tamaño de letra más pequeño */
-  justify-content: center; /* Centrar horizontalmente */
 }
 
 .footer-rights {
