@@ -30,7 +30,12 @@ import './App.css';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false); // Estado para el modo oscuro
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Función para alternar el modo oscuro
+  const toggleDarkMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
 
   // Verifica el estado de autenticación y el rol cada vez que el componente se renderiza
   useEffect(() => {
@@ -44,7 +49,7 @@ function App() {
     } else {
       document.body.classList.remove('dark-mode');
     }
-  }, [isDarkMode]); // Asegúrate de que se ejecute al cambiar el modo
+  }, [isDarkMode]);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -60,7 +65,7 @@ function App() {
         ) : isAuthenticated ? (
           <UserHeader onLogout={handleLogout} />
         ) : (
-          <Header />
+          <Header toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
         )}
 
         <ToastContainer position="top-right" autoClose={5000} />
