@@ -81,7 +81,7 @@ function App() {
             <Route path="/audit-logs" element={<AuditLogs />} />
             <Route path="/password-change-logs" element={<PasswordChangeLogs />} />
             <Route path="/contact-edit" element={<ContactEdit />} />
-            <Route path="/politicas" element={<PolicyDetail />} />
+            <Route path="/politicas/:id" element={<PolicyDetail />} />
 
             <Route 
               path="/profile" 
