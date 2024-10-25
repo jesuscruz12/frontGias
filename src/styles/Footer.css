@@ -11,13 +11,13 @@
 }
 
 .footer-content {
-  display: flex; /* Disposición horizontal */
-  flex-direction: column; /* Colocar los elementos en columna */
-  align-items: center; /* Centrar elementos */
+  display: flex;
+  flex-direction: column; /* Cambiar a disposición en columna */
+  align-items: center; /* Centrar los elementos */
 }
 
-.social-container {
-  margin-bottom: 20px; /* Espacio entre redes sociales y enlaces legales */
+.social-container, .legal-container, .contact-info {
+  margin-bottom: 20px; /* Espacio entre secciones */
 }
 
 .social-icons a {
@@ -29,13 +29,11 @@
 .legal-container ul {
   list-style-type: none; /* Sin viñetas */
   padding: 0; /* Sin relleno */
-  display: flex; /* Disposición horizontal */
-  justify-content: center; /* Centrado horizontal */
-  gap: 20px; /* Espacio entre enlaces */
-  flex-wrap: wrap; /* Ajustar en pantallas pequeñas */
+  text-align: center; /* Centrar horizontalmente */
 }
 
 .legal-container li {
+  margin: 5px 0; /* Espacio entre enlaces legales */
   font-size: 0.9rem; /* Tamaño de letra más pequeño */
 }
 
@@ -47,9 +45,7 @@
   margin: 20px auto; /* Espacio vertical, centrado */
 }
 
-/* Sección de contacto */
 .contact-info {
-  margin-top: 20px; /* Espacio encima de la sección de contacto */
   text-align: center; /* Centrar el texto */
 }
 
@@ -64,10 +60,6 @@
   align-items: center; /* Centrar verticalmente los íconos y texto */
   font-size: 0.9rem; /* Tamaño de letra más pequeño */
   justify-content: center; /* Centrar horizontalmente */
-}
-
-.contact-info p .fa-icon {
-  margin-right: 8px; /* Espacio entre ícono y texto */
 }
 
 .footer-rights {
