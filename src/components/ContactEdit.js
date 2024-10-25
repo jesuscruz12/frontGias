@@ -40,7 +40,7 @@ const ContactEdit = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://backendgias.vercel.app/api/contact/contact-info', {
+      const response = await fetch('https://backendgias.onrender.com/api/contact/contact-info', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
