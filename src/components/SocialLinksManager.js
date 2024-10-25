@@ -9,7 +9,7 @@ const SocialLinksManager = () => {
     useEffect(() => {
         const fetchLinks = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/social-links'); // Asegúrate de usar la URL correcta
+                const response = await axios.get('https://backendgias.vercel.app/api/social-links'); // Asegúrate de usar la URL correcta
                 setLinks(response.data);
             } catch (error) {
                 console.error('Error fetching social links:', error);
@@ -22,7 +22,7 @@ const SocialLinksManager = () => {
     // Add a new social link
     const addLink = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/api/social-links', newLink); // URL correcta
+            const response = await axios.post('https://backendgias.vercel.app/api/social-links', newLink); // URL correcta
             setLinks([...links, response.data]);
             setNewLink({ platform: '', url: '', status: 'active' }); // Reset form after adding
         } catch (error) {
@@ -33,7 +33,7 @@ const SocialLinksManager = () => {
     // Edit an existing social link
     const editLink = async (id) => {
         try {
-            const response = await axios.put(`http://localhost:5000/api/social-links/${id}`, newLink); // URL correcta
+            const response = await axios.put(`https://backendgias.vercel.app/api/social-links/${id}`, newLink); // URL correcta
             setLinks(links.map(link => link._id === id ? response.data : link));
         } catch (error) {
             console.error('Error editing social link:', error);
@@ -43,7 +43,7 @@ const SocialLinksManager = () => {
     // Delete a social link
     const deleteLink = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/social-links/${id}`); // URL correcta
+            await axios.delete(`https://backendgias.vercel.app/api/social-links/${id}`); // URL correcta
             setLinks(links.filter(link => link._id !== id));
         } catch (error) {
             console.error('Error deleting social link:', error);

@@ -8,7 +8,7 @@ const PasswordChangeLogs = () => {
   useEffect(() => {
     const fetchPasswordChanges = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/audit/password-change-logs');
+        const response = await fetch('https://backendgias.vercel.app/api/audit/password-change-logs');
         if (!response.ok) {
           throw new Error('Error al obtener los registros de cambios de contraseña');
         }

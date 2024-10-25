@@ -24,7 +24,7 @@ const ResetPassword = () => {
     console.log("New Password:", newPassword);  // Verificar que se recibe la nueva contraseña
 
     try {
-      const response = await fetch('http://localhost:5000/api/password/reset-password', {
+      const response = await fetch('https://backendgias.vercel.app/api/password/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, newPassword }),
