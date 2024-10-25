@@ -63,11 +63,6 @@ function App() {
         )}
 
         <ToastContainer position="top-right" autoClose={5000} />
-
-        <button onClick={() => setIsDarkMode(prevMode => !prevMode)} className="dark-mode-toggle">
-          {isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}
-        </button>
-
         <main>
           <Routes>
             <Route path="/" element={<Home />} />

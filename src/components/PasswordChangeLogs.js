@@ -8,7 +8,7 @@ const PasswordChangeLogs = () => {
   useEffect(() => {
     const fetchPasswordChanges = async () => {
       try {
-        const response = await fetch('https://backendgias.onrender.com/audit/password-change-logs');
+        const response = await fetch('https://backendgias.onrender.com/api/audit/password-change-logs');
         if (!response.ok) {
           throw new Error('Error al obtener los registros de cambios de contraseña');
         }

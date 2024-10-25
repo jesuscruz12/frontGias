@@ -15,7 +15,7 @@ const TermsCrud = () => {
   // Obtener todos los términos
   const fetchTerms = async () => {
     try {
-      const response = await axios.get(`${API_URL}/terms`);
+      const response = await axios.get(`${API_URL}/api/terms`);
       setTerms(response.data); // Guardar los términos en el estado
     } catch (error) {
       console.error('Error al obtener los términos:', error);
@@ -30,7 +30,7 @@ const TermsCrud = () => {
     }
 
     try {
-      await axios.post(`${API_URL}/terms`, newTerm); // Crear término en el backend
+      await axios.post(`${API_URL}/api/terms`, newTerm); // Crear término en el backend
       setNewTerm({ title: '', content: '' }); // Reiniciar los campos del formulario
       fetchTerms(); // Recargar los términos
     } catch (error) {
@@ -51,7 +51,7 @@ const TermsCrud = () => {
     }
 
     try {
-      await axios.put(`${API_URL}/terms/${editingTerm._id}`, editingTerm); // Actualizar el término
+      await axios.put(`${API_URL}/api/terms/${editingTerm._id}`, editingTerm); // Actualizar el término
       setEditingTerm(null); // Salir del modo de edición
       fetchTerms(); // Recargar los términos
     } catch (error) {
@@ -62,7 +62,7 @@ const TermsCrud = () => {
   // Eliminar un término
   const handleDeleteTerm = async (id) => {
     try {
-      await axios.delete(`${API_URL}/terms/${id}`); // Eliminar término por ID
+      await axios.delete(`${API_URL}/api/terms/${id}`); // Eliminar término por ID
       fetchTerms(); // Recargar los términos
     } catch (error) {
       console.error('Error al eliminar el término:', error);

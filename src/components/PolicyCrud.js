@@ -16,7 +16,7 @@ const PolicyCrud = () => {
   // Función para obtener las políticas del backend
   const fetchPolicies = async () => {
     try {
-      const response = await axios.get(`${API_URL}/policies`);
+      const response = await axios.get(`${API_URL}/api/policies`);
       setPolicies(response.data); // Guardar las políticas en el estado
     } catch (error) {
       console.error('Error al obtener las políticas:', error);
@@ -26,7 +26,7 @@ const PolicyCrud = () => {
   // Función para crear una nueva política
   const handleCreatePolicy = async () => {
     try {
-      await axios.post(`${API_URL}/policies`, newPolicy); // Enviar la nueva política al backend
+      await axios.post(`${API_URL}/api/policies`, newPolicy); // Enviar la nueva política al backend
       setNewPolicy({ title: '', content: '' }); // Reiniciar el formulario
       fetchPolicies(); // Volver a cargar las políticas
     } catch (error) {
@@ -42,7 +42,7 @@ const PolicyCrud = () => {
   // Función para guardar los cambios en una política editada
   const handleSavePolicy = async () => {
     try {
-      await axios.put(`${API_URL}/policies/${editingPolicy._id}`, editingPolicy); // Actualizar la política
+      await axios.put(`${API_URL}/api/policies/${editingPolicy._id}`, editingPolicy); // Actualizar la política
       setEditingPolicy(null); // Limpiar el estado de edición
       fetchPolicies(); // Volver a cargar las políticas
     } catch (error) {
@@ -53,7 +53,7 @@ const PolicyCrud = () => {
   // Función para eliminar una política
   const handleDeletePolicy = async (id) => {
     try {
-      await axios.delete(`${API_URL}/policies/${id}`); // Eliminar la política por ID
+      await axios.delete(`${API_URL}/api/policies/${id}`); // Eliminar la política por ID
       fetchPolicies(); // Volver a cargar las políticas
     } catch (error) {
       console.error('Error al eliminar la política:', error);

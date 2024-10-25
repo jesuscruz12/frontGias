@@ -12,7 +12,7 @@ const DisclaimerDetail = () => {
   useEffect(() => {
     const fetchDisclaimer = async () => {
       try {
-        const response = await axios.get(`${API_URL}/legal-boundaries/${id}`); // Obtén el deslinde por ID
+        const response = await axios.get(`${API_URL}/api/legal-boundaries/${id}`); // Obtén el deslinde por ID
         console.log(response.data); // Verifica la respuesta de la API
         setDisclaimer(response.data); // Guarda el deslinde en el estado
       } catch (error) {

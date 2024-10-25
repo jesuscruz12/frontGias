@@ -12,7 +12,7 @@ const PolicyViewer = () => {
   useEffect(() => {
     const fetchPolicy = async () => {
       try {
-        const response = await axios.get(`${API_URL}/policies/${id}`); // Obtén la política por ID
+        const response = await axios.get(`${API_URL}/api/policies/${id}`); // Obtén la política por ID
         setPolicy(response.data); // Guarda la política en el estado
       } catch (error) {
         console.error('Error al obtener la política:', error);

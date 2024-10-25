@@ -12,7 +12,7 @@ const TermsDetail = () => {
   useEffect(() => {
     const fetchTerms = async () => {
       try {
-        const response = await axios.get(`${API_URL}/terms/${id}`); // Obtén los términos por ID
+        const response = await axios.get(`${API_URL}/api/terms/${id}`); // Obtén los términos por ID
         console.log(response.data); // Verifica la respuesta de la API
         setTerms(response.data); // Guarda los términos en el estado
       } catch (error) {
