@@ -1,0 +1,17 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 110px;
+    margin-bottom: 405px;
+  }
+  
+  .dashboard-container h1 {
+    color: #333;
+  }
+  
+  .dashboard-container p {
+    color: #555;
+  }
+  

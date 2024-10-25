@@ -1,0 +1,51 @@
+/* src/styles/terms.css */
+.terms-management {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .terms-input {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .terms-input input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .terms-input button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .terms-management ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .terms-management li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+  }
+  
+  .edit-term {
+    margin-top: 15px;
+  }
+  
