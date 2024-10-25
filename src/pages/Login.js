@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Carousel } from 'react-bootstrap';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify'; // Importar react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Importar el CSS de react-toastify
 import '../styles/Login.css';
 import imagen2 from '../assets/imagen2.png';
 import imagen3 from '../assets/imagen3.jpg';
-
-// Clave del sitio de reCAPTCHA
-const RECAPTCHA_SITE_KEY = '6LevFWwqAAAAAJXo2ezz-8y_u_CLAPnvlsOYLYht';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -16,24 +13,29 @@ const Login = () => {
     password: ''
   });
 
-  const [recaptchaVerified, setRecaptchaVerified] = useState(false); // Estado para verificar reCAPTCHA
   const navigate = useNavigate();
 
-  // Función para manejar la respuesta de reCAPTCHA
-  const handleRecaptchaChange = (value) => {
-    if (value) {
-      setRecaptchaVerified(true); // Se establece en verdadero si se completa el reCAPTCHA
-    } else {
-      setRecaptchaVerified(false);
-    }
-  };
+  // Cargar reCAPTCHA cuando el componente se monta
+  useEffect(() => {
+    const loadRecaptcha = () => {
+      const script = document.createElement('script');
+      script.src = 'https://www.google.com/recaptcha/api.js';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    };
+    loadRecaptcha();
+  }, []);
 
-  // Función para manejar el envío del formulario
+  // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Verificar si reCAPTCHA fue completado
-    if (!recaptchaVerified) {
+    // Verificar si el elemento reCAPTCHA existe
+    const recaptchaElement = document.querySelector('#g-recaptcha-response');
+    const recaptchaResponse = recaptchaElement ? recaptchaElement.value : '';
+
+    if (!recaptchaResponse) {
       toast.error('Por favor completa el reCAPTCHA', { position: 'top-right' });
       return;
     }
@@ -43,7 +45,7 @@ const Login = () => {
       const response = await fetch('https://backendgias.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, recaptchaToken: recaptchaResponse }),
       });
 
       const result = await response.json();
@@ -112,15 +114,8 @@ const Login = () => {
               />
             </div>
 
-            {/* reCAPTCHA v2: No soy un robot */}
-            <div className="form-group">
-              <div
-                className="g-recaptcha"
-                data-sitekey={RECAPTCHA_SITE_KEY}
-                data-callback="handleRecaptchaChange"
-                data-expired-callback={() => setRecaptchaVerified(false)}
-              ></div>
-            </div>
+            {/* Aquí se incluye el reCAPTCHA */}
+            <div className="g-recaptcha" data-sitekey="6LevFWwqAAAAAJXo2ezz-8y_u_CLAPnvlsOYLYht"></div>
 
             <button type="submit">Iniciar Sesión</button>
           </form>
@@ -131,9 +126,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-
-      {/* Carga del script de reCAPTCHA */}
-      <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </div>
   );
 };
