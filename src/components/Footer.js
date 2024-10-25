@@ -86,7 +86,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="container">
-        {/* Sección de redes sociales */}
+        {/* Contenedor para la sección de redes sociales */}
         <div className="social-container">
           <h3>Nuestras Redes:</h3>
           <div className="social-icons">
@@ -117,7 +117,7 @@ const Footer = () => {
 
         <hr className="footer-divider" />
 
-        {/* Sección de enlaces legales */}
+        {/* Contenedor para la sección de enlaces legales */}
         <div className="legal-container">
           <h3>Enlaces Legales</h3>
           <ul>
@@ -141,7 +141,7 @@ const Footer = () => {
 
         <hr className="footer-divider" />
 
-        {/* Sección de datos de contacto */}
+        {/* Datos de contacto */}
         <div className="contact-info">
           <h3>Datos de Contacto:</h3>
           <p>
