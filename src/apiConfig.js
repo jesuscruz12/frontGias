@@ -1,3 +1,3 @@
-const API_URL = 'http://localhost:5000/api'; // o la URL correcta del backend
+const API_URL = 'https://backendgias.onrender.com'; // o la URL correcta del backend
 
 export default API_URL;

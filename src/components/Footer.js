@@ -22,7 +22,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchContactData = async () => {
       try {
-        const response = await fetch('https://backendgias.vercel.app/api/contact/contact-info');
+        const response = await fetch('https://backendgias.onrender.com/api/contact/contact-info');
         if (!response.ok) {
           throw new Error('Error en la respuesta del servidor');
         }
@@ -40,7 +40,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchSocialLinks = async () => {
       try {
-        const response = await axios.get('https://backendgias.vercel.app/api/social-links');
+        const response = await axios.get('https://backendgias.onrender.com/api/social-links');
         const activeLinks = response.data.filter(link => link.status === 'active');
         setSocialLinks(activeLinks);
       } catch (error) {
@@ -55,7 +55,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchLatestPolicies = async () => {
       try {
-        const response = await axios.get('https://backendgias.vercel.app/api/policies');
+        const response = await axios.get('https://backendgias.onrender.com/api/policies');
         const latestPolicy = response.data.reduce((prev, current) => {
           return (prev.version > current.version) ? prev : current;
         });
@@ -72,7 +72,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchLatestTerms = async () => {
       try {
-        const response = await axios.get('https://backendgias.vercel.app/api/terms');
+        const response = await axios.get('https://backendgias.onrender.com/api/terms');
         const latestTerm = response.data.reduce((prev, current) => {
           return (prev.version > current.version) ? prev : current;
         });
@@ -89,7 +89,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchLatestDisclaimer = async () => {
       try {
-        const response = await axios.get('https://backendgias.vercel.app/api/legal-boundaries');
+        const response = await axios.get('https://backendgias.onrender.com/api/legal-boundaries');
         const latestDisclaimer = response.data.reduce((prev, current) => {
           return (prev.version > current.version) ? prev : current;
         });

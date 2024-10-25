@@ -9,7 +9,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('https://backendgias.vercel.app/api/password/send-code', {
+      const response = await fetch('https://backendgias.onrender.com/api/password/send-code', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ correo: email }),

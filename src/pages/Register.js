@@ -75,7 +75,7 @@ const Register = () => {
     // Activar el indicador de carga
     setLoading(true);
     try {
-      const response = await fetch('https://backendgias.vercel.app/api/users/register', {
+      const response = await fetch('https://backendgias.onrender.com/api/users/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

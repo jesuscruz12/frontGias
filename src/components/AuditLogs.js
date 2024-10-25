@@ -9,7 +9,7 @@ const AuditLogs = () => {
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const response = await fetch('https://backendgias.vercel.app/api/audit/audit-logs');
+        const response = await fetch('https://backendgias.onrender.com/api/audit/audit-logs');
         if (!response.ok) {
           throw new Error('Error al obtener los registros');
         }

@@ -14,7 +14,7 @@ const ContactEdit = () => {
   useEffect(() => {
     const fetchContactData = async () => {
       try {
-        const response = await fetch('https://backendgias.vercel.app/api/contact/contact-info'); // Asegúrate de que esta ruta sea correcta
+        const response = await fetch('https://backendgias.onrender.com/api/contact/contact-info'); // Asegúrate de que esta ruta sea correcta
         if (!response.ok) {
           throw new Error('Error en la respuesta del servidor');
         }

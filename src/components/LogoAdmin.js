@@ -31,7 +31,7 @@ const LogoAdmin = () => {
         formData.append('logo', logo);
 
         try {
-            const response = await axios.post('https://backendgias.vercel.app/api/logo', formData, {
+            const response = await axios.post('https://backendgias.onrender.com/api/logo', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

@@ -9,7 +9,7 @@ const SloganAdmin = () => {
 
   const fetchSlogan = async () => {
     try {
-      const response = await axios.get('https://backendgias.vercel.app/api/slogan');
+      const response = await axios.get('https://backendgias.onrender.com/api/slogan');
       if (response.data && response.data.slogan) {
         setSlogan(response.data.slogan); // Muestra el eslogan si existe
         setIsEditing(true); // Cambia a modo de edición si ya hay un eslogan
@@ -37,7 +37,7 @@ const SloganAdmin = () => {
     }
 
     try {
-      const response = await axios.post('https://backendgias.vercel.app/api/slogan', { slogan });
+      const response = await axios.post('https://backendgias.onrender.com/api/slogan', { slogan });
       setSuccessMessage(isEditing ? 'Eslogan actualizado exitosamente.' : 'Eslogan registrado exitosamente.');
       setIsEditing(true); // Ahora está en modo de edición
     } catch (error) {
