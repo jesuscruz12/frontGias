@@ -2,68 +2,56 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const LogoAdmin = () => {
-    const [logo, setLogo] = useState(null); // Estado para manejar el logo
-    const [error, setError] = useState(null); // Estado para manejar errores
-    const [successMessage, setSuccessMessage] = useState(''); // Mensaje de éxito
+    const [file, setFile] = useState(null);
+    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false); // Para manejar el estado de carga
 
-    const handleLogoChange = (e) => {
-        const file = e.target.files[0];
-        
-        // Validar el tamaño del archivo
-        if (file && file.size > 2 * 1024 * 1024) { // 2 MB
-            setError('El tamaño del archivo debe ser menor a 2 MB');
-            return;
-        }
-
-        setLogo(file);
-        setError(null); // Resetea el mensaje de error al seleccionar un nuevo archivo
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
     };
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        
-        if (!logo) {
-            setError('Por favor, selecciona un archivo de imagen.');
+        if (!file) {
+            setMessage('Por favor, selecciona un archivo.'); // Mensaje de advertencia si no hay archivo
             return;
         }
 
         const formData = new FormData();
-        formData.append('logo', logo);
+        formData.append('file', file); // Cambié 'logo' a 'file' para que coincida con el campo esperado en el backend.
+
+        setLoading(true); // Activar el estado de carga
+        setMessage(''); // Limpiar el mensaje anterior
 
         try {
             const response = await axios.post('https://backendgias.onrender.com/api/logo', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                    'Content-Type': 'multipart/form-data',
+                },
             });
-
-            setSuccessMessage('Logo actualizado exitosamente.');
-            setLogo(null); // Resetea el logo después de subirlo
+            setMessage('Logo subido exitosamente'); // Solo mostrar el mensaje de éxito
         } catch (error) {
-            console.error('Error al subir el logo:', error);
-            setError('Error al subir el logo. Por favor, intenta de nuevo.');
+            console.error('Error al subir el logo:', error); // Log del error en consola
+            setMessage('Error al subir el logo'); // Mensaje de error
+        } finally {
+            setLoading(false); // Desactivar el estado de carga
         }
     };
 
     return (
         <div>
-            <h2>Subida y Actualización del Logo</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-            
             <form onSubmit={handleFormSubmit}>
-                <div>
-                    <label htmlFor="logo">Selecciona el logo:</label>
-                    <input
-                        type="file"
-                        id="logo"
-                        accept=".jpeg,.jpg,.png"
-                        onChange={handleLogoChange}
-                        required
-                    />
-                </div>
-                <button type="submit">Actualizar Logo</button>
+                <input 
+                    type="file" 
+                    onChange={handleFileChange} 
+                    accept="image/*" 
+                    required // Asegura que un archivo es seleccionado antes de enviar
+                />
+                <button type="submit" disabled={loading}> 
+                    {loading ? 'Subiendo...' : 'Subir Logo'}
+                </button>
             </form>
+            {message && <p>{message}</p>} {/* Muestra solo el mensaje */}
         </div>
     );
 };

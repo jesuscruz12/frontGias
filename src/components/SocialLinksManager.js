@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../styles/SocialLinksManager.css';
 
 const SocialLinksManager = () => {
     const [links, setLinks] = useState([]);
     const [newLink, setNewLink] = useState({ platform: '', url: '', status: 'active' });
 
-    // Fetch all social links on component mount
     useEffect(() => {
         const fetchLinks = async () => {
             try {
-                const response = await axios.get('https://backendgias.onrender.com/api/social-links'); // Asegúrate de usar la URL correcta
+                const response = await axios.get('https://backendgias.onrender.com/api/social-links');
                 setLinks(response.data);
             } catch (error) {
                 console.error('Error fetching social links:', error);
@@ -19,31 +19,28 @@ const SocialLinksManager = () => {
         fetchLinks();
     }, []);
 
-    // Add a new social link
     const addLink = async () => {
         try {
-            const response = await axios.post('https://backendgias.onrender.com/api/social-links', newLink); // URL correcta
+            const response = await axios.post('https://backendgias.onrender.com/api/social-links', newLink);
             setLinks([...links, response.data]);
-            setNewLink({ platform: '', url: '', status: 'active' }); // Reset form after adding
+            setNewLink({ platform: '', url: '', status: 'active' });
         } catch (error) {
             console.error('Error adding social link:', error);
         }
     };
 
-    // Edit an existing social link
     const editLink = async (id) => {
         try {
-            const response = await axios.put(`https://backendgias.onrender.com/api/social-links/${id}`, newLink); // URL correcta
+            const response = await axios.put(`https://backendgias.onrender.com/api/social-links/${id}`, newLink);
             setLinks(links.map(link => link._id === id ? response.data : link));
         } catch (error) {
             console.error('Error editing social link:', error);
         }
     };
 
-    // Delete a social link
     const deleteLink = async (id) => {
         try {
-            await axios.delete(`https://backendgias.onrender.com/api/social-links/${id}`); // URL correcta
+            await axios.delete(`https://backendgias.onrender.com/api/social-links/${id}`);
             setLinks(links.filter(link => link._id !== id));
         } catch (error) {
             console.error('Error deleting social link:', error);
@@ -51,10 +48,9 @@ const SocialLinksManager = () => {
     };
 
     return (
-        <div>
-            <h2>Manage Social Media Links</h2>
-            <div>
-                {/* Form to add a new link */}
+        <div className="social-links-container">
+            <h2>Redes Sociales</h2>
+            <div className="social-form">
                 <input
                     type="text"
                     placeholder="Platform"
@@ -77,13 +73,14 @@ const SocialLinksManager = () => {
                 <button onClick={addLink}>Add New Link</button>
             </div>
 
-            {/* List of social links */}
-            <ul>
+            <ul className="social-links-list">
                 {links.map(link => (
                     <li key={link._id}>
                         <span>{link.platform}: {link.url} ({link.status})</span>
-                        <button onClick={() => editLink(link._id)}>Edit</button>
-                        <button onClick={() => deleteLink(link._id)}>Delete</button>
+                        <div>
+                            <button className="edit-button" onClick={() => editLink(link._id)}>Edit</button>
+                            <button onClick={() => deleteLink(link._id)}>Delete</button>
+                        </div>
                     </li>
                 ))}
             </ul>

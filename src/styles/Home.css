@@ -2,6 +2,7 @@
 .home-container {
   padding: 50px 20px; /* Espaciado superior e inferior */
   text-align: center;
+  margin-top: 40px;
 }
 
 /* Estilo para el título principal */
@@ -18,7 +19,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  margin-top: 30px;
+  margin-top: 40px;
   padding: 0 20px;
 }
 

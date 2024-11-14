@@ -1,0 +1,107 @@
+/* Estilos generales para el contenedor */
+.social-links-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .social-links-container h2 {
+    text-align: center;
+    color: #0056b3;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para el formulario */
+  .social-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .social-form input,
+  .social-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .social-form button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .social-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos para la lista de enlaces */
+  .social-links-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+  
+  .social-links-list li {
+    background-color: #e9f5ff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .social-links-list li span {
+    font-size: 16px;
+  }
+  
+  .social-links-list button {
+    background-color: #33b346;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px;
+  }
+  
+  .social-links-list button:hover {
+    background-color: #c82333;
+  }
+  
+  .edit-button {
+    background-color: #168866;
+    color: black;
+  }
+  
+  .edit-button:hover {
+    background-color: #e0a800;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 600px) {
+    .social-form {
+      flex-direction: column;
+    }
+  
+    .social-links-list li {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .social-links-list button {
+      margin-top: 10px;
+    }
+  }
+  
