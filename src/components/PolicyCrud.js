@@ -25,6 +25,10 @@ const PolicyCrud = () => {
 
   // Función para crear una nueva política
   const handleCreatePolicy = async () => {
+    if (!newPolicy.title || !newPolicy.content) {
+      console.error('Título y contenido no pueden estar vacíos');
+      return;
+    }
     try {
       await axios.post(`${API_URL}/api/policies`, newPolicy); // Enviar la nueva política al backend
       setNewPolicy({ title: '', content: '' }); // Reiniciar el formulario
@@ -41,12 +45,20 @@ const PolicyCrud = () => {
 
   // Función para guardar los cambios en una política editada
   const handleSavePolicy = async () => {
+    // Verifica que editingPolicy no sea nulo y tenga las propiedades correctas
+    if (!editingPolicy || !editingPolicy.title || !editingPolicy.content) {
+      console.error('Título y contenido no pueden estar vacíos');
+      return;
+    }
+
+    console.log('Guardando política:', editingPolicy); // Verifica los datos que se enviarán
+
     try {
       await axios.put(`${API_URL}/api/policies/${editingPolicy._id}`, editingPolicy); // Actualizar la política
-      setEditingPolicy(null); // Limpiar el estado de edición
-      fetchPolicies(); // Volver a cargar las políticas
+      setEditingPolicy(null); // Salir del modo de edición
+      fetchPolicies(); // Recargar las políticas
     } catch (error) {
-      console.error('Error al guardar la política:', error);
+      console.error('Error al guardar la nueva versión de la política:', error.response ? error.response.data : error.message);
     }
   };
 
@@ -97,13 +109,15 @@ const PolicyCrud = () => {
                   value={editingPolicy.content}
                   onChange={(e) => setEditingPolicy({ ...editingPolicy, content: e.target.value })}
                 />
-                <button onClick={handleSavePolicy}>Guardar</button>
+                <button onClick={handleSavePolicy}>Guardar nueva versión</button>
                 <button onClick={() => setEditingPolicy(null)}>Cancelar</button>
               </>
             ) : (
               <>
-                <h4>{policy.title}</h4>
+                <h4>{policy.title} {policy.isCurrent && <span>(Vigente)</span>}</h4>
                 <p>{policy.content}</p>
+                <p>Versión: {policy.version || 1}</p>
+                <p>Fecha de creación: {new Date(policy.createdAt).toLocaleString()}</p>
                 <button onClick={() => handleEditPolicy(policy)}>Editar</button>
                 <button onClick={() => handleDeletePolicy(policy._id)}>Eliminar</button>
               </>
