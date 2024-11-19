@@ -10,20 +10,25 @@ const ContactEdit = () => {
     telefono: '',
   });
   const [isLoading, setIsLoading] = useState(false); // Estado para el indicador de carga
+  const [errors, setErrors] = useState({ correo: '', telefono: '' }); // Estado para errores en tiempo real
 
-  // Validar los datos de contacto antes de enviar
-  const validateContactData = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[0-9]{10}$/; // Adaptar según el formato esperado
-    if (!emailRegex.test(contactData.correo)) {
-      toast.error('Por favor, ingrese un correo electrónico válido.', { position: 'top-right' });
-      return false;
+  // Validar correo y teléfono en tiempo real
+  const validateField = (name, value) => {
+    if (name === 'correo') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(value) ? '' : 'Correo inválido';
     }
-    if (!phoneRegex.test(contactData.telefono)) {
-      toast.error('Por favor, ingrese un número de teléfono válido.', { position: 'top-right' });
-      return false;
+    if (name === 'telefono') {
+      const phoneRegex = /^[0-9]{10}$/; // Cambiar según el formato deseado
+      return phoneRegex.test(value) ? '' : 'Número de teléfono inválido';
     }
-    return true;
+    return '';
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
   // Cargar los datos de contacto al iniciar el componente
@@ -31,7 +36,7 @@ const ContactEdit = () => {
     const fetchContactData = async () => {
       try {
         setIsLoading(true); // Mostrar indicador de carga
-        const response = await fetch('https://backendgias.onrender.com/api/contact/contact-info'); // Asegúrate de que esta ruta sea correcta
+        const response = await fetch('https://backendgias.onrender.com/api/contact/contact-info');
         if (!response.ok) {
           throw new Error('Error en la respuesta del servidor');
         }
@@ -52,12 +57,18 @@ const ContactEdit = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContactData({ ...contactData, [name]: value });
+
+    // Validar mientras escribe (opcional)
+    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
   };
 
   // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateContactData()) return;
+    if (Object.values(errors).some((error) => error)) {
+      toast.error('Por favor, corrige los errores antes de guardar.', { position: 'top-right' });
+      return;
+    }
 
     try {
       setIsLoading(true); // Mostrar indicador de carga
@@ -103,8 +114,10 @@ const ContactEdit = () => {
             name="correo"
             value={contactData.correo}
             onChange={handleChange}
+            onBlur={handleBlur}
             required
           />
+          {errors.correo && <span className="error-message">{errors.correo}</span>}
         </div>
         <div className="form-group">
           <label>Número de Teléfono</label>
@@ -113,8 +126,10 @@ const ContactEdit = () => {
             name="telefono"
             value={contactData.telefono}
             onChange={handleChange}
+            onBlur={handleBlur}
             required
           />
+          {errors.telefono && <span className="error-message">{errors.telefono}</span>}
         </div>
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Guardando...' : 'Guardar Cambios'}
