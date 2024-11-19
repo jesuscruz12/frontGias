@@ -9,11 +9,28 @@ const ContactEdit = () => {
     correo: '',
     telefono: '',
   });
+  const [isLoading, setIsLoading] = useState(false); // Estado para el indicador de carga
+
+  // Validar los datos de contacto antes de enviar
+  const validateContactData = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10}$/; // Adaptar según el formato esperado
+    if (!emailRegex.test(contactData.correo)) {
+      toast.error('Por favor, ingrese un correo electrónico válido.', { position: 'top-right' });
+      return false;
+    }
+    if (!phoneRegex.test(contactData.telefono)) {
+      toast.error('Por favor, ingrese un número de teléfono válido.', { position: 'top-right' });
+      return false;
+    }
+    return true;
+  };
 
   // Cargar los datos de contacto al iniciar el componente
   useEffect(() => {
     const fetchContactData = async () => {
       try {
+        setIsLoading(true); // Mostrar indicador de carga
         const response = await fetch('https://backendgias.onrender.com/api/contact/contact-info'); // Asegúrate de que esta ruta sea correcta
         if (!response.ok) {
           throw new Error('Error en la respuesta del servidor');
@@ -23,6 +40,8 @@ const ContactEdit = () => {
       } catch (error) {
         console.error('Error al cargar los datos de contacto:', error);
         toast.error('Error al cargar los datos de contacto', { position: 'top-right' });
+      } finally {
+        setIsLoading(false); // Ocultar indicador de carga
       }
     };
 
@@ -38,8 +57,10 @@ const ContactEdit = () => {
   // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateContactData()) return;
 
     try {
+      setIsLoading(true); // Mostrar indicador de carga
       const response = await fetch('https://backendgias.onrender.com/api/contact/contact-info', {
         method: 'PUT',
         headers: {
@@ -55,6 +76,8 @@ const ContactEdit = () => {
       }
     } catch (error) {
       toast.error('Error de red al actualizar los datos.', { position: 'top-right' });
+    } finally {
+      setIsLoading(false); // Ocultar indicador de carga
     }
   };
 
@@ -93,10 +116,13 @@ const ContactEdit = () => {
             required
           />
         </div>
-        <button type="submit">Guardar Cambios</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Guardando...' : 'Guardar Cambios'}
+        </button>
       </form>
     </div>
   );
 };
 
 export default ContactEdit;
+
