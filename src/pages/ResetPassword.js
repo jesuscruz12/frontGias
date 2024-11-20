@@ -1,15 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import '../styles/ResetPassword.css';
+import { checkPasswordStrength } from '../utils/PasswordUtils';
+
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [passwordRequirementsMet, setPasswordRequirementsMet] = useState([]);
-  const [searchParams] = useSearchParams();
+  const [passwordStrength, setPasswordStrength] = useState('');
+  const [passwordSuggestions, setPasswordSuggestions] = useState([]);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setNewPassword(value);
+    const { strength, suggestions } = checkPasswordStrength(value);
+    setPasswordStrength(strength <= 2 ? 'Débil' : strength === 3 ? 'Medio' : 'Fuerte');
+    setPasswordSuggestions(suggestions);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,11 +37,9 @@ const ResetPassword = () => {
     }
 
     const token = searchParams.get('token');
-    console.log("Token:", token);  // Verificar que se recibe el token
-    console.log("New Password:", newPassword);  // Verificar que se recibe la nueva contraseña
 
     try {
-      const response = await fetch('https://backendgias.onrender.com/api/password/reset-password', {
+      const response = await fetch('http://localhost:5000/api/password/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, newPassword }),
@@ -43,30 +58,6 @@ const ResetPassword = () => {
     }
   };
 
-  // Función para manejar la visibilidad de la contraseña
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
-  // Función para validar los requisitos de la contraseña
-  const validatePassword = (password) => {
-    const requirements = [
-      { regex: /.{8,}/, message: 'Debe tener al menos 8 caracteres' },
-      { regex: /[A-Z]/, message: 'Debe incluir al menos una letra mayúscula' },
-      { regex: /[0-9]/, message: 'Debe incluir al menos un número' },
-      { regex: /[^A-Za-z0-9]/, message: 'Debe incluir al menos un carácter especial' },
-    ];
-
-    const unmetRequirements = requirements.filter((requirement) => !requirement.regex.test(password));
-    setPasswordRequirementsMet(unmetRequirements);
-  };
-
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setNewPassword(value);
-    validatePassword(value);
-  };
-
   return (
     <div className="reset-password-container">
       <div className="reset-password-form">
@@ -79,27 +70,38 @@ const ResetPassword = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Nueva Contraseña:</label>
-            <div className="password-input-container">
+            <div className="password-input-container" style={{ position: 'relative' }}>
               <input
                 type={passwordVisible ? 'text' : 'password'}
                 value={newPassword}
                 onChange={handlePasswordChange}
                 required
               />
-              <span className="toggle-password" onClick={togglePasswordVisibility}>
-                {passwordVisible ? '°°' : '°'}
+              <span
+                onClick={togglePasswordVisibility}
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  cursor: 'pointer',
+                }}
+              >
+                <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
               </span>
             </div>
+            <div className={`password-strength ${passwordStrength.toLowerCase()}`}>
+              Fortaleza: {passwordStrength}
+            </div>
+            {passwordSuggestions.length > 0 && (
+              <ul className="password-suggestions">
+                {passwordSuggestions.map((suggestion, index) => (
+                  <li key={index}>{suggestion}</li>
+                ))}
+              </ul>
+            )}
           </div>
-          <div className="password-requirements">
-            <ul>
-              {passwordRequirementsMet.map((requirement, index) => (
-                <li key={index} style={{ color: 'gray' }}>
-                  {requirement.message}
-                </li>
-              ))}
-            </ul>
-          </div>
+
           <div className="form-group">
             <label>Confirmar Contraseña:</label>
             <input
@@ -109,7 +111,9 @@ const ResetPassword = () => {
               required
             />
           </div>
-          <button type="submit" className="submit-btn">Restablecer Contraseña</button>
+          <button type="submit" className="submit-btn">
+            Restablecer Contraseña
+          </button>
         </form>
       </div>
     </div>
