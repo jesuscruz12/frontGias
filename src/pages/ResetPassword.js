@@ -39,7 +39,7 @@ const ResetPassword = () => {
     const token = searchParams.get('token');
 
     try {
-      const response = await fetch('http://localhost:5000/api/password/reset-password', {
+      const response = await fetch('https://backendgias.onrender.com/api/password/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, newPassword }),

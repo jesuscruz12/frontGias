@@ -74,7 +74,7 @@ const Register = () => {
 
   const validateEmail = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/validate-email', {
+      const response = await fetch('https://backendgias.onrender.com/api/validate-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: formData.correo }),
@@ -99,7 +99,7 @@ const Register = () => {
   const validatePhone = async () => {
     const fullPhoneNumber = `${countryCode}${formData.telefono}`; // Concatenar código de país y número
     try {
-      const response = await fetch('http://localhost:5000/api/validate-phone', {
+      const response = await fetch('https://backendgias.onrender.com/api/validate-phone', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: fullPhoneNumber }),
@@ -138,7 +138,7 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/users/register', {
+      const response = await fetch('https://backendgias.onrender.com/api/users/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, telefono: fullPhoneNumber }), // Incluye el número completo
