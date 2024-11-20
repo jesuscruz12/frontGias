@@ -7,6 +7,7 @@ import SocialLinksManager from '../components/SocialLinksManager';
 import LegalBoundaryCrud from '../components/LegalBoundaryCrud';
 import SloganManager from '../components/SloganAdmin';
 import LogoManager from '../components/LogoAdmin'; // Importa el nuevo componente para la gestión de logos
+import TitleManager from '../components/TitleAdmin';
 import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = ({ onLogout, toggleDarkMode, isDarkMode }) => {
@@ -18,6 +19,7 @@ const AdminDashboard = ({ onLogout, toggleDarkMode, isDarkMode }) => {
   const [showLogoManager, setShowLogoManager] = useState(false);
   const [showContactEdit, setShowContactEdit] = useState(false);
   const [showLoginLogs, setShowLoginLogs] = useState(false);
+  const [showTitleManager, setShowTitleManager] = useState(false);
   const [showPasswordChangeLogs, setShowPasswordChangeLogs] = useState(false);
   const navigate = useNavigate();
 
@@ -55,7 +57,10 @@ const AdminDashboard = ({ onLogout, toggleDarkMode, isDarkMode }) => {
   const handleShowContactEdit = () => {
     navigate('/contact-edit');
   };
-
+  const handleShowTitleManager = () => {
+    resetAll();
+    setShowTitleManager(true);
+  };
   const handleShowLoginLogs = () => {
     navigate('/audit-logs');
   };
@@ -72,6 +77,7 @@ const AdminDashboard = ({ onLogout, toggleDarkMode, isDarkMode }) => {
     setShowLegalBoundaryCrud(false);
     setShowSloganManager(false);
     setShowLogoManager(false);
+    setShowTitleManager(false);
     setShowContactEdit(false);
     setShowLoginLogs(false);
     setShowPasswordChangeLogs(false);
@@ -158,6 +164,13 @@ const AdminDashboard = ({ onLogout, toggleDarkMode, isDarkMode }) => {
               <p>Ver registros de cambios de contraseña</p>
               <button className="view-button">Ver</button>
             </div>
+              {/* Registros de Cambio de Titulo */}
+            <div className="dashboard-tool" onClick={handleShowTitleManager}>
+              <div className="tool-icon title-icon"></div>
+              <h3>Gestión de Título</h3>
+              <p>Ver y gestionar el título de la empresa</p>
+              <button className="view-button">Ir</button>
+            </div>
           </div>
         ) : null}
 
@@ -168,6 +181,7 @@ const AdminDashboard = ({ onLogout, toggleDarkMode, isDarkMode }) => {
         {showLegalBoundaryCrud && <LegalBoundaryCrud />}
         {showSloganManager && <SloganManager />}
         {showLogoManager && <LogoManager />}
+        {showTitleManager && <TitleAdmin />}
       </div>
     </div>
   );

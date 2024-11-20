@@ -16,6 +16,8 @@ const Header = ({ toggleDarkMode, isDarkMode, isAuthenticated, isAdmin, onLogout
             if (logoResponse.data.length > 0) {
                 setLogoUrl(logoResponse.data[0].url);
             }
+            const titleResponse = await axios.get('https://backendgias.onrender.com/api/title'); // Obtener el título
+            setTitle(titleResponse.data.title); // Guardar el título en el estado
         } catch (error) {
             console.error('Error al obtener los datos del header:', error);
         }
@@ -23,13 +25,18 @@ const Header = ({ toggleDarkMode, isDarkMode, isAuthenticated, isAdmin, onLogout
 
     useEffect(() => {
         fetchHeaderData();
+        const intervalId = setInterval(() => {
+            fetchHeaderData(); // Verifica cada 10 segundos
+        }, 5000); // Cambia el tiempo según tus necesidades
+
+        return () => clearInterval(intervalId);
     }, []);
 
     return (
         <header className="header">
             <div className="container">
                 {logoUrl && <img src={logoUrl} alt="Logo de GIAS" className="logo" />}
-                <h1>GIAS</h1>
+                <h1>{title}</h1> {/* Renderiza el título de forma dinámica */}
                 <p>{slogan}</p>
                 <nav>
                     <ul>
